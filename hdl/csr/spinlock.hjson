@@ -1,0 +1,44 @@
+{
+    name      : "spinlock",
+    width     : 8,
+    desc      : "CSR for spinlock"
+    interface : "sbi"
+
+    registers : [
+
+        {
+            name         : "lock0",
+            address      : "x0",
+            desc         : "Lock 0",
+            swaccess     : "rsw1c",
+            hwaccess     : "none",
+            hwtype       : "reg",
+
+            fields: [
+                {
+                    name: "value",
+                    bits: "7:0",
+                    desc: "0: lock release, 1: lock acquiere"
+                },
+            ]
+        },
+
+        {
+            name         : "lock1",
+            address      : "x1",
+            desc         : "Lock 1",
+            swaccess     : "rsw1c",
+            hwaccess     : "none",
+            hwtype       : "reg",
+
+            fields: [
+                {
+                    name: "value",
+                    bits: "7:0",
+                    desc: "0: lock release, 1: lock acquiere"
+                },
+            ]
+        },
+
+]
+}

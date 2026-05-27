@@ -1,0 +1,67 @@
+CAPI=2:
+
+#-----------------------------------------------------------------------------
+# Title      : spinlock Core file
+# Project    : Asylum
+#-----------------------------------------------------------------------------
+# File       : spinlock.core
+# Author     : mrosiere
+#-----------------------------------------------------------------------------
+# Description: 
+#-----------------------------------------------------------------------------
+# Copyright (c) 2025
+#-----------------------------------------------------------------------------
+# Revisions  :
+# Date        Version  Author   Description
+# 2026/05/25  1.0.0    mrosiere First Release
+#-----------------------------------------------------------------------------
+
+name        : asylum:system:spinlock:1.0.0
+description : spinlock Module
+
+#=========================================
+generate:
+#=========================================
+
+  #---------------------------------------
+  gen_csr:
+  #---------------------------------------
+    generator : regtool
+    parameters:
+      file         : hdl/csr/spinlock.hjson
+      name         : spinlock
+      copy         : hdl/csr
+      logical_name : asylum
+
+#=========================================
+filesets:
+#=========================================
+
+  #---------------------------------------
+  hdl:
+  #---------------------------------------
+    files        :
+      - hdl/spinlock_pkg.vhd
+      - hdl/sbi_spinlock.vhd
+    file_type    : vhdlSource
+    logical_name : asylum
+    depend       :
+      - asylum:utils:generators
+      - asylum:utils:pkg
+      - asylum:target:techmap
+
+#=========================================
+targets:
+#=========================================
+
+  #---------------------------------------
+  default: &default
+  #---------------------------------------
+    description     : Default Target
+    filesets        :
+      - hdl
+    toplevel        : spinlock
+    default_tool    : ghdl
+    generate        :
+      - gen_csr
+
