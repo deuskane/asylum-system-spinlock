@@ -50,8 +50,6 @@ package spinlock_csr_pkg is
     lock1 : spinlock_lock1_sw2hw_t;
   end record spinlock_sw2hw_t;
 
-  type spinlock_hw2sw_t is record
-  end record spinlock_hw2sw_t;
 
   constant spinlock_ADDR_WIDTH : natural := 1;
   constant spinlock_DATA_WIDTH : natural := 8;
@@ -62,14 +60,13 @@ package spinlock_csr_pkg is
 component spinlock_registers is
   port (
     -- Clock and Reset
-    clk_i      : in  std_logic;
-    arst_b_i   : in  std_logic;
+    clk_i      : in  std_logic
+   ;arst_b_i   : in  std_logic
     -- Bus
-    sbi_ini_i  : in  sbi_ini_t;
-    sbi_tgt_o  : out sbi_tgt_t;
+   ;sbi_ini_i  : in  sbi_ini_t
+   ;sbi_tgt_o  : out sbi_tgt_t
     -- CSR
-    sw2hw_o    : out spinlock_sw2hw_t;
-    hw2sw_i    : in  spinlock_hw2sw_t
+   ;sw2hw_o    : out spinlock_sw2hw_t
   );
 end component spinlock_registers;
 

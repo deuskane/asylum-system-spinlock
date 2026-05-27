@@ -47,18 +47,18 @@ end entity sbi_spinlock;
 architecture rtl of sbi_spinlock is
 
   signal   sw2hw                  : spinlock_sw2hw_t;
-  signal   hw2sw                  : spinlock_hw2sw_t;
+--signal   hw2sw                  : spinlock_hw2sw_t; -- Empty !
 
 begin  -- architecture rtl
 
   ins_csr : spinlock_registers
   port map(
-    clk_i     => clk_i           ,
-    arst_b_i  => arst_b_i        ,
-    sbi_ini_i => sbi_ini_i       ,
-    sbi_tgt_o => sbi_tgt_o       ,
-    sw2hw_o   => sw2hw           ,
-    hw2sw_i   => hw2sw   
+    clk_i     => clk_i    
+   ,arst_b_i  => arst_b_i 
+   ,sbi_ini_i => sbi_ini_i
+   ,sbi_tgt_o => sbi_tgt_o
+   ,sw2hw_o   => sw2hw    
+ --,hw2sw_i   => hw2sw   
     );
   
 end architecture rtl;
