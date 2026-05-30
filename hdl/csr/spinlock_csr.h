@@ -15,7 +15,7 @@
 #define SPINLOCK_LOCK0 0x0
 
 // Field       : lock0.value
-// Description : 0: lock release, 1: lock acquiere
+// Description : 0: lock free, 1: lock acquiered
 // Range       : [7:0]
 #define SPINLOCK_LOCK0_VALUE      0
 #define SPINLOCK_LOCK0_VALUE_MASK 255
@@ -28,7 +28,7 @@
 #define SPINLOCK_LOCK1 0x1
 
 // Field       : lock1.value
-// Description : 0: lock release, 1: lock acquiere
+// Description : 0: lock free, 1: lock acquiered
 // Range       : [7:0]
 #define SPINLOCK_LOCK1_VALUE      0
 #define SPINLOCK_LOCK1_VALUE_MASK 255

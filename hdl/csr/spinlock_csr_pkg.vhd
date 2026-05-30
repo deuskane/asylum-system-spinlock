@@ -19,7 +19,7 @@ package spinlock_csr_pkg is
   -- Description : Lock 0
   -- Address     : 0x0
   -- Width       : 8
-  -- Sw Access   : rsw1c
+  -- Sw Access   : rsw0c
   -- Hw Access   : none
   -- Hw Type     : reg
   --==================================
@@ -33,7 +33,7 @@ package spinlock_csr_pkg is
   -- Description : Lock 1
   -- Address     : 0x1
   -- Width       : 8
-  -- Sw Access   : rsw1c
+  -- Sw Access   : rsw0c
   -- Hw Access   : none
   -- Hw Type     : reg
   --==================================

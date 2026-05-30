@@ -115,13 +115,13 @@ begin  -- architecture rtl
   -- Description : Lock 0
   -- Address     : 0x0
   -- Width       : 8
-  -- Sw Access   : rsw1c
+  -- Sw Access   : rsw0c
   -- Hw Access   : none
   -- Hw Type     : reg
   --==================================
   --==================================
   -- Field       : value
-  -- Description : 0: lock release, 1: lock acquiere
+  -- Description : 0: lock free, 1: lock acquiered
   -- Width       : 8
   --==================================
 
@@ -148,7 +148,7 @@ begin  -- architecture rtl
       generic map
         (WIDTH         => 8
         ,INIT          => INIT_lock0
-        ,MODEL         => "rsw1c"
+        ,MODEL         => "rsw0c"
         )
       port map
         (clk_i         => clk_i
@@ -186,13 +186,13 @@ begin  -- architecture rtl
   -- Description : Lock 1
   -- Address     : 0x1
   -- Width       : 8
-  -- Sw Access   : rsw1c
+  -- Sw Access   : rsw0c
   -- Hw Access   : none
   -- Hw Type     : reg
   --==================================
   --==================================
   -- Field       : value
-  -- Description : 0: lock release, 1: lock acquiere
+  -- Description : 0: lock free, 1: lock acquiered
   -- Width       : 8
   --==================================
 
@@ -219,7 +219,7 @@ begin  -- architecture rtl
       generic map
         (WIDTH         => 8
         ,INIT          => INIT_lock1
-        ,MODEL         => "rsw1c"
+        ,MODEL         => "rsw0c"
         )
       port map
         (clk_i         => clk_i

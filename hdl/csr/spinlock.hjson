@@ -10,7 +10,7 @@
             name         : "lock0",
             address      : "x0",
             desc         : "Lock 0",
-            swaccess     : "rsw1c",
+            swaccess     : "rsw0c",
             hwaccess     : "none",
             hwtype       : "reg",
 
@@ -18,7 +18,8 @@
                 {
                     name: "value",
                     bits: "7:0",
-                    desc: "0: lock release, 1: lock acquiere"
+		    init: "x00",
+                    desc: "0: lock free, 1: lock acquiered"
                 },
             ]
         },
@@ -27,7 +28,7 @@
             name         : "lock1",
             address      : "x1",
             desc         : "Lock 1",
-            swaccess     : "rsw1c",
+            swaccess     : "rsw0c",
             hwaccess     : "none",
             hwtype       : "reg",
 
@@ -35,7 +36,8 @@
                 {
                     name: "value",
                     bits: "7:0",
-                    desc: "0: lock release, 1: lock acquiere"
+		    init: "x00",
+                    desc: "0: lock free, 1: lock acquiered"
                 },
             ]
         },

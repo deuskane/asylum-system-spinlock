@@ -10,11 +10,11 @@ CSR for spinlock
 Lock 0
 
 ### [7:0] value
-0: lock release, 1: lock acquiere
+0: lock free, 1: lock acquiered
 
 ## 0x1 lock1
 Lock 1
 
 ### [7:0] value
-0: lock release, 1: lock acquiere
+0: lock free, 1: lock acquiered
 
