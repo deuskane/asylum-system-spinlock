@@ -27,8 +27,8 @@ Ports
 
 | Name | Direction | Type | Description |
 |------|-----------|------|-------------|
-| `clk_i` | in | `std_lospinlock` | Clock input |
-| `arst_b_i` | in | `std_lospinlock` | Asynchronous reset (active low) |
+| `clk_i` | in | `std_logic` | Clock input |
+| `arst_b_i` | in | `std_logic` | Asynchronous reset (active low) |
 | `sbi_ini_i` | in | `sbi_ini_t` | Bus initiator interface (SBI) |
 | `sbi_tgt_o` | out | `sbi_tgt_t` | Bus target interface (SBI) |
 
