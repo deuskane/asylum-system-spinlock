@@ -33,6 +33,9 @@ use     asylum.spinlock_csr_pkg.all;
 use     asylum.techmap_pkg.all;
 
 entity sbi_spinlock is
+  generic (
+    NAME             : string  := ""
+    );
   port   (
     clk_i            : in  std_logic;
     arst_b_i         : in  std_logic; -- asynchronous reset
@@ -52,13 +55,16 @@ architecture rtl of sbi_spinlock is
 begin  -- architecture rtl
 
   ins_csr : spinlock_registers
+  generic map(
+    MODULE_NAME      => NAME
+    )
   port map(
-    clk_i     => clk_i    
-   ,arst_b_i  => arst_b_i 
-   ,sbi_ini_i => sbi_ini_i
-   ,sbi_tgt_o => sbi_tgt_o
-   ,sw2hw_o   => sw2hw    
- --,hw2sw_i   => hw2sw   
+    clk_i            => clk_i
+   ,arst_b_i         => arst_b_i
+   ,sbi_ini_i        => sbi_ini_i 
+   ,sbi_tgt_o        => sbi_tgt_o
+   ,sw2hw_o          => sw2hw           
+ --,hw2sw_i          => hw2sw   
     );
   
 end architecture rtl;

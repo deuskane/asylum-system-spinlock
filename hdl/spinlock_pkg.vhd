@@ -29,6 +29,9 @@ package spinlock_pkg is
   
 -- [COMPONENT_INSERT][BEGIN]
 component sbi_spinlock is
+  generic (
+    NAME             : string  := ""
+    );
   port   (
     clk_i            : in  std_logic;
     arst_b_i         : in  std_logic; -- asynchronous reset

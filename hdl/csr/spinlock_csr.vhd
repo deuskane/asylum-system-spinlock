@@ -18,6 +18,9 @@ use     asylum.sbi_pkg.all;
 -- Width       : 8
 --==================================
 entity spinlock_registers is
+  generic (
+    MODULE_NAME :  string := "" -- Name of the module
+  );
   port (
     -- Clock and Reset
     clk_i      : in  std_logic
@@ -262,5 +265,11 @@ begin  -- architecture rtl
     lock0_rdata when lock0_rcs = '1' else
     lock1_rdata when lock1_rcs = '1' else
     (others => '0'); -- Bad Address, return 0
-  sbi_tgt_o.info.name <= to_sbi_name("spinlock");
+
+  gen_tgt_info_name : if MODULE_NAME = ""
+  generate
+    sbi_tgt_o.info.name <= to_sbi_name("spinlock");
+  else generate
+    sbi_tgt_o.info.name <= to_sbi_name(MODULE_NAME);
+  end generate;
 end architecture rtl;
