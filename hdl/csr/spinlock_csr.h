@@ -34,7 +34,7 @@
 #define SPINLOCK_LOCK1_VALUE_MASK 255
 
 //----------------------------------
-// Structure {module}_t
+// Structure spinlock_t
 //----------------------------------
 typedef struct {
   uint8_t lock0; // 0x0
