@@ -37,13 +37,13 @@ architecture rtl of spinlock_registers is
 
   signal   sig_wcs   : std_logic;
   signal   sig_we    : std_logic;
-  signal   sig_waddr : std_logic_vector(sbi_ini_i.addr'length-1 downto 0);
+  signal   sig_waddr : unsigned(spinlock_ADDR_WIDTH-1 downto 0);
   signal   sig_wdata : std_logic_vector(sbi_ini_i.wdata'length-1 downto 0);
   signal   sig_wbusy : std_logic;
 
   signal   sig_rcs   : std_logic;
   signal   sig_re    : std_logic;
-  signal   sig_raddr : std_logic_vector(sbi_ini_i.addr'length-1 downto 0);
+  signal   sig_raddr : unsigned(spinlock_ADDR_WIDTH-1 downto 0);
   signal   sig_rdata : std_logic_vector(sbi_tgt_o.rdata'length-1 downto 0);
   signal   sig_rbusy : std_logic;
 
@@ -98,12 +98,12 @@ begin  -- architecture rtl
   -- Interface 
   sig_wcs   <= sbi_ini_i.cs;
   sig_we    <= sbi_ini_i.we;
-  sig_waddr <= sbi_ini_i.addr;
+  sig_waddr <= unsigned(sbi_ini_i.addr(spinlock_ADDR_WIDTH-1 downto 0));
   sig_wdata <= sbi_ini_i.wdata;
 
   sig_rcs   <= sbi_ini_i.cs;
   sig_re    <= sbi_ini_i.re;
-  sig_raddr <= sbi_ini_i.addr;
+  sig_raddr <= unsigned(sbi_ini_i.addr(spinlock_ADDR_WIDTH-1 downto 0));
   sbi_tgt_o.rdata <= sig_rdata;
   sbi_tgt_o.ready <= not sig_busy;
 
@@ -129,7 +129,7 @@ begin  -- architecture rtl
   --==================================
 
 
-    lock0_rcs     <= '1' when     (sig_raddr(spinlock_ADDR_WIDTH-1 downto 0) = std_logic_vector(to_unsigned(0,spinlock_ADDR_WIDTH))) else '0';
+    lock0_rcs     <= '1' when (sig_raddr = spinlock_LOCK0) else '0';
     lock0_re      <= sig_rcs and sig_re and lock0_rcs;
     lock0_rdata   <= (
       0 => lock0_rdata_sw(0), -- value(0)
@@ -142,7 +142,7 @@ begin  -- architecture rtl
       7 => lock0_rdata_sw(7), -- value(7)
       others => '0');
 
-    lock0_wcs     <= '1' when       (sig_waddr(spinlock_ADDR_WIDTH-1 downto 0) = std_logic_vector(to_unsigned(0,spinlock_ADDR_WIDTH)))   else '0';
+    lock0_wcs     <= '1' when       (sig_waddr = spinlock_LOCK0)   else '0';
     lock0_we      <= sig_wcs and sig_we and lock0_wcs;
     lock0_wdata   <= sig_wdata;
     lock0_wdata_sw(7 downto 0) <= lock0_wdata(7 downto 0); -- value
@@ -200,7 +200,7 @@ begin  -- architecture rtl
   --==================================
 
 
-    lock1_rcs     <= '1' when     (sig_raddr(spinlock_ADDR_WIDTH-1 downto 0) = std_logic_vector(to_unsigned(1,spinlock_ADDR_WIDTH))) else '0';
+    lock1_rcs     <= '1' when (sig_raddr = spinlock_LOCK1) else '0';
     lock1_re      <= sig_rcs and sig_re and lock1_rcs;
     lock1_rdata   <= (
       0 => lock1_rdata_sw(0), -- value(0)
@@ -213,7 +213,7 @@ begin  -- architecture rtl
       7 => lock1_rdata_sw(7), -- value(7)
       others => '0');
 
-    lock1_wcs     <= '1' when       (sig_waddr(spinlock_ADDR_WIDTH-1 downto 0) = std_logic_vector(to_unsigned(1,spinlock_ADDR_WIDTH)))   else '0';
+    lock1_wcs     <= '1' when       (sig_waddr = spinlock_LOCK1)   else '0';
     lock1_we      <= sig_wcs and sig_we and lock1_wcs;
     lock1_wdata   <= sig_wdata;
     lock1_wdata_sw(7 downto 0) <= lock1_wdata(7 downto 0); -- value
