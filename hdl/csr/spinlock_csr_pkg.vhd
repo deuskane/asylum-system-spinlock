@@ -18,8 +18,8 @@ package spinlock_csr_pkg is
   -- Global Constants
   ------------------------------------
 
-  constant spinlock_ADDR_WIDTH : natural := 1;
-  constant spinlock_DATA_WIDTH : natural := 8;
+  constant SPINLOCK_ADDR_WIDTH : natural := 1;
+  constant SPINLOCK_DATA_WIDTH : natural := 8;
 
   --==================================
   -- Register    : lock0
@@ -30,7 +30,7 @@ package spinlock_csr_pkg is
   -- Hw Access   : none
   -- Hw Type     : reg
   --==================================
-  constant spinlock_LOCK0 : unsigned(spinlock_ADDR_WIDTH-1 downto 0) := to_unsigned(0, spinlock_ADDR_WIDTH);
+  constant SPINLOCK_LOCK0 : unsigned(SPINLOCK_ADDR_WIDTH-1 downto 0) := to_unsigned(0, SPINLOCK_ADDR_WIDTH);
 
   type spinlock_lock0_sw2hw_t is record
     re : std_logic;
@@ -46,7 +46,7 @@ package spinlock_csr_pkg is
   -- Hw Access   : none
   -- Hw Type     : reg
   --==================================
-  constant spinlock_LOCK1 : unsigned(spinlock_ADDR_WIDTH-1 downto 0) := to_unsigned(1, spinlock_ADDR_WIDTH);
+  constant SPINLOCK_LOCK1 : unsigned(SPINLOCK_ADDR_WIDTH-1 downto 0) := to_unsigned(1, SPINLOCK_ADDR_WIDTH);
 
   type spinlock_lock1_sw2hw_t is record
     re : std_logic;
