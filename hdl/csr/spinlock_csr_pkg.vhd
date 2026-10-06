@@ -23,7 +23,7 @@ package spinlock_csr_pkg is
 
   --==================================
   -- Register    : lock0
-  -- Description : Lock 0
+  -- Description : Lock 0 (test-and-set on read, write 0x00 to release)
   -- Address     : 0x0
   -- Width       : 8
   -- Sw Access   : rsw0c
@@ -39,7 +39,7 @@ package spinlock_csr_pkg is
 
   --==================================
   -- Register    : lock1
-  -- Description : Lock 1
+  -- Description : Lock 1 (test-and-set on read, write 0x00 to release)
   -- Address     : 0x1
   -- Width       : 8
   -- Sw Access   : rsw0c

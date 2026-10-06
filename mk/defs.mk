@@ -1,3 +1,3 @@
 FILE_CORE	?= spinlock.core
-TARGET          ?=
-TOOL		?=
+TARGET          ?= sim_spinlock
+TOOL		?= ghdl

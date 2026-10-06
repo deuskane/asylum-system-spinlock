@@ -115,7 +115,7 @@ begin  -- architecture rtl
   generate
   --==================================
   -- Register    : lock0
-  -- Description : Lock 0
+  -- Description : Lock 0 (test-and-set on read, write 0x00 to release)
   -- Address     : 0x0
   -- Width       : 8
   -- Sw Access   : rsw0c
@@ -124,7 +124,7 @@ begin  -- architecture rtl
   --==================================
   --==================================
   -- Field       : value
-  -- Description : 0: lock free, 1: lock acquiered
+  -- Description : Read: returns the lock state then takes the lock (all bits set to 1) - 0x00: lock was free and is now owned by the reader, 0xFF (any non-zero value): lock already taken. Write: bits written to 0 are cleared (write 0x00 to release), a write never takes the lock
   -- Width       : 8
   --==================================
 
@@ -186,7 +186,7 @@ begin  -- architecture rtl
   generate
   --==================================
   -- Register    : lock1
-  -- Description : Lock 1
+  -- Description : Lock 1 (test-and-set on read, write 0x00 to release)
   -- Address     : 0x1
   -- Width       : 8
   -- Sw Access   : rsw0c
@@ -195,7 +195,7 @@ begin  -- architecture rtl
   --==================================
   --==================================
   -- Field       : value
-  -- Description : 0: lock free, 1: lock acquiered
+  -- Description : Read: returns the lock state then takes the lock (all bits set to 1) - 0x00: lock was free and is now owned by the reader, 0xFF (any non-zero value): lock already taken. Write: bits written to 0 are cleared (write 0x00 to release), a write never takes the lock
   -- Width       : 8
   --==================================
 
