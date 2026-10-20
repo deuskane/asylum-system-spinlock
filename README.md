@@ -181,6 +181,8 @@ Notes:
 |--------|----------|-------------|
 | `default` | `sbi_spinlock` | HDL fileset + CSR generation (not a simulation) |
 | `sim_spinlock` | `tb_spinlock` | Simulation of `sbi_spinlock` with VIP |
+| `lint_ghdl` | `sbi_spinlock_synth_top` | Lint: GHDL `-Wall` analysis and elaboration (empty simulation) of `sbi_spinlock` in a wrapper with flat SBI ports (`syn/ghdl/sbi_spinlock_synth_top.vhd`) |
+| `lint_ghdl_synth` | `sbi_spinlock_synth_top` | Synthesis check: `lint_ghdl`, then `ghdl --synth -Wall` of the wrapper (`syn/ghdl/ghdl_synth.sh`, 1 configuration: `sbi_spinlock` has no generic but `NAME`), fails on a synthesis error or an inferred latch |
 
 ### How to Run
 
@@ -190,6 +192,8 @@ The default tool is GHDL (`mk/defs.mk`: `TOOL ?= ghdl`, `TARGET ?= sim_spinlock`
 make help                    # variables, rules and target list (mk/targets.txt)
 make sim_spinlock            # run the testbench (log in log/)
 make nonreg_sim              # run every sim_* target
+make lint_ghdl               # GHDL -Wall lint (make nonreg_lint: every lint_* target)
+make lint_ghdl_synth         # GHDL -Wall lint + ghdl --synth -Wall check
 make clean                   # remove build/ and log/
 ```
 
@@ -203,7 +207,7 @@ CI ([.github/workflows/ci.yml](.github/workflows/ci.yml)) runs the `sim_spinlock
 
 ## Synthesis
 
-No dedicated synthesis target. The HDL sources of the `default` target (`hdl/*.vhd` + generated CSR) contain no simulation-only code (no file I/O, no `translate_off` section) and are synthesizable. The design is two 8-bit registers plus the address decoding (each `csr_reg` also registers its read / write strobes).
+No vendor synthesis target (`lint_ghdl_synth` checks the RTL with `ghdl --synth`, see [Targets](#targets)). The HDL sources of the `default` target (`hdl/*.vhd` + generated CSR) contain no simulation-only code (no file I/O, no `translate_off` section) and are synthesizable. The design is two 8-bit registers plus the address decoding (each `csr_reg` also registers its read / write strobes).
 
 ## Design Notes
 
@@ -244,6 +248,9 @@ asylum-system-spinlock/
 │   └── spinlock.drawio          # Block diagram
 ├── sim/
 │   └── tb_spinlock.vhd          # UVVM testbench
+├── syn/ghdl/
+│   ├── sbi_spinlock_synth_top.vhd  # Lint / synthesis check top (flat SBI ports)
+│   └── ghdl_synth.sh            # ghdl --synth check (post_run hook of lint_ghdl_synth)
 ├── hdl/
 │   ├── spinlock_pkg.vhd
 │   ├── sbi_spinlock.vhd
