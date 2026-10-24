@@ -1,6 +1,6 @@
-default            : Default Target
-lint_ghdl          : Lint with GHDL (-Wall analysis and elaboration of sbi_spinlock_synth_top)
-lint_ghdl_synth    : Synthesis check, ghdl --synth -Wall of sbi_spinlock_synth_top (1 configuration)
-sim_spinlock       : Simulation of sbi_spinlock with VIP
-sim_spinlock_owner : Simulation of sbi_spinlock with VIP - owner ID mode (OWNER_ID = true)
+default                 : Default Target
+lint_ghdl               : Lint with GHDL (-Wall analysis and elaboration of sbi_spinlock_wrapper)
+lint_ghdl_synth_default : Synthesis check of sbi_spinlock_wrapper, default generics
+sim_spinlock            : Simulation of sbi_spinlock with VIP
+sim_spinlock_owner      : Simulation of sbi_spinlock with VIP - owner ID mode (OWNER_ID = true)
 

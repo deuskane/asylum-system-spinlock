@@ -1,12 +1,12 @@
 -------------------------------------------------------------------------------
--- Title      : sbi_spinlock_synth_top
+-- Title      : sbi_spinlock_wrapper
 -- Project    : Asylum
 -------------------------------------------------------------------------------
--- File       : sbi_spinlock_synth_top.vhd
+-- File       : sbi_spinlock_wrapper.vhd
 -- Author     : Mathieu Rosiere
 -------------------------------------------------------------------------------
 -- Description:
--- Synthesis check top (lint_ghdl, lint_ghdl_synth) : sbi_spinlock with flat
+-- Wrapper (lint_ghdl, lint_ghdl_synth_*) : sbi_spinlock with flat
 -- and constrained ports (sbi_spinlock has unconstrained SBI ports and cannot
 -- be a synthesis top). SBI address / data width : SBI_ADDR_WIDTH /
 -- SBI_DATA_WIDTH. NAME (only generic) is only in sbi_tgt.info, not
@@ -17,6 +17,7 @@
 -- Revisions  :
 -- Date        Version  Author   Description
 -- 2026-10-20  1.0      mrosiere Created
+-- 2026-10-24  1.1      mrosiere Was sbi_spinlock_synth_top, library asylum
 -------------------------------------------------------------------------------
 
 library ieee;
@@ -24,7 +25,7 @@ use     ieee.std_logic_1164.all;
 library asylum;
 use     asylum.sbi_pkg.all;
 
-entity sbi_spinlock_synth_top is
+entity sbi_spinlock_wrapper is
   port (
     clk_i         : in  std_logic;
     arst_b_i      : in  std_logic;
@@ -38,9 +39,9 @@ entity sbi_spinlock_synth_top is
     ready_o       : out std_logic;
     rdata_o       : out std_logic_vector(SBI_DATA_WIDTH-1 downto 0)
   );
-end entity sbi_spinlock_synth_top;
+end entity sbi_spinlock_wrapper;
 
-architecture rtl of sbi_spinlock_synth_top is
+architecture rtl of sbi_spinlock_wrapper is
 
   signal sbi_ini       : sbi_ini_t(addr (SBI_ADDR_WIDTH-1 downto 0),
                                    wdata(SBI_DATA_WIDTH-1 downto 0));
