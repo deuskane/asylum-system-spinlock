@@ -61,7 +61,6 @@ architecture rtl of spinlock_registers is
   signal   lock0_we        : std_logic;
   signal   lock0_wdata     : std_logic_vector(8-1 downto 0);
   signal   lock0_wdata_sw  : std_logic_vector(8-1 downto 0);
-  signal   lock0_wdata_hw  : std_logic_vector(8-1 downto 0);
   signal   lock0_wbusy     : std_logic;
 
   signal   lock0_rcs       : std_logic;
@@ -83,7 +82,6 @@ architecture rtl of spinlock_registers is
   signal   lock1_we        : std_logic;
   signal   lock1_wdata     : std_logic_vector(8-1 downto 0);
   signal   lock1_wdata_sw  : std_logic_vector(8-1 downto 0);
-  signal   lock1_wdata_hw  : std_logic_vector(8-1 downto 0);
   signal   lock1_wbusy     : std_logic;
 
   signal   lock1_rcs       : std_logic;
@@ -132,15 +130,15 @@ begin  -- architecture rtl
     lock0_rcs     <= '1' when (sig_raddr = spinlock_LOCK0) else '0';
     lock0_re      <= sig_rcs and sig_re and lock0_rcs;
     lock0_rdata   <= (
-      0 => lock0_rdata_sw(0), -- value(0)
-      1 => lock0_rdata_sw(1), -- value(1)
-      2 => lock0_rdata_sw(2), -- value(2)
-      3 => lock0_rdata_sw(3), -- value(3)
-      4 => lock0_rdata_sw(4), -- value(4)
-      5 => lock0_rdata_sw(5), -- value(5)
-      6 => lock0_rdata_sw(6), -- value(6)
-      7 => lock0_rdata_sw(7), -- value(7)
-      others => '0');
+       0 => lock0_rdata_sw(0) -- value(0)
+      ,1 => lock0_rdata_sw(1) -- value(1)
+      ,2 => lock0_rdata_sw(2) -- value(2)
+      ,3 => lock0_rdata_sw(3) -- value(3)
+      ,4 => lock0_rdata_sw(4) -- value(4)
+      ,5 => lock0_rdata_sw(5) -- value(5)
+      ,6 => lock0_rdata_sw(6) -- value(6)
+      ,7 => lock0_rdata_sw(7) -- value(7)
+      );
 
     lock0_wcs     <= '1' when       (sig_waddr = spinlock_LOCK0)   else '0';
     lock0_we      <= sig_wcs and sig_we and lock0_wcs;
@@ -203,15 +201,15 @@ begin  -- architecture rtl
     lock1_rcs     <= '1' when (sig_raddr = spinlock_LOCK1) else '0';
     lock1_re      <= sig_rcs and sig_re and lock1_rcs;
     lock1_rdata   <= (
-      0 => lock1_rdata_sw(0), -- value(0)
-      1 => lock1_rdata_sw(1), -- value(1)
-      2 => lock1_rdata_sw(2), -- value(2)
-      3 => lock1_rdata_sw(3), -- value(3)
-      4 => lock1_rdata_sw(4), -- value(4)
-      5 => lock1_rdata_sw(5), -- value(5)
-      6 => lock1_rdata_sw(6), -- value(6)
-      7 => lock1_rdata_sw(7), -- value(7)
-      others => '0');
+       0 => lock1_rdata_sw(0) -- value(0)
+      ,1 => lock1_rdata_sw(1) -- value(1)
+      ,2 => lock1_rdata_sw(2) -- value(2)
+      ,3 => lock1_rdata_sw(3) -- value(3)
+      ,4 => lock1_rdata_sw(4) -- value(4)
+      ,5 => lock1_rdata_sw(5) -- value(5)
+      ,6 => lock1_rdata_sw(6) -- value(6)
+      ,7 => lock1_rdata_sw(7) -- value(7)
+      );
 
     lock1_wcs     <= '1' when       (sig_waddr = spinlock_LOCK1)   else '0';
     lock1_we      <= sig_wcs and sig_we and lock1_wcs;
