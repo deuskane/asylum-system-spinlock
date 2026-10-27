@@ -90,3 +90,29 @@ targets:
       ghdl :
         analyze_options : ["-Wall","-fsynopsys","-frelaxed","--no-vital-checks"]
         run_options     : ["--fst=dut.fst","--ieee-asserts=disable"]
+
+  #---------------------------------------
+  sim_spinlock_owner:
+  #---------------------------------------
+    << : *default
+    description     : Simulation of sbi_spinlock with VIP - owner ID mode (OWNER_ID = true)
+    filesets_append :
+      - sim
+    toplevel        : tb_spinlock
+    parameters      :
+      - OWNER_ID=true
+    default_tool    : ghdl
+    tools :
+      ghdl :
+        analyze_options : ["-Wall","-fsynopsys","-frelaxed","--no-vital-checks"]
+        run_options     : ["--fst=dut.fst","--ieee-asserts=disable"]
+
+#=========================================
+parameters :
+#=========================================
+
+  OWNER_ID :
+    description : Lock protocol of the testbench DUT, false = test-and-set on read, true = owner ID
+    datatype    : bool
+    default     : false
+    paramtype   : generic

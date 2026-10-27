@@ -6,7 +6,10 @@
 -- Author     : Mathieu Rosiere
 -------------------------------------------------------------------------------
 -- Description: UVVM/SBI self-checking testbench for sbi_spinlock
---              Test-and-set semantics of lock0 / lock1 (rsw0c registers)
+--              OWNER_ID = false : test-and-set semantics of lock0 / lock1
+--                                 (rsw0c model)
+--              OWNER_ID = true  : owner ID compare-and-set, reads without
+--                                 side effect
 -------------------------------------------------------------------------------
 -- Copyright (c) 2026
 -------------------------------------------------------------------------------
@@ -31,6 +34,9 @@ use     asylum.spinlock_pkg.all;
 use     asylum.spinlock_csr_pkg.all;
 
 entity tb_spinlock is
+  generic (
+    OWNER_ID : boolean := false
+  );
 end entity tb_spinlock;
 
 architecture sim of tb_spinlock is
@@ -82,7 +88,8 @@ begin
 
   ins_dut : sbi_spinlock
     generic map (
-      NAME      => "SPINLOCK"
+      NAME      => "SPINLOCK",
+      OWNER_ID  => OWNER_ID
     )
     port map (
       clk_i     => clk_i,
@@ -125,6 +132,7 @@ begin
     sbi_if <= init_sbi_if_signals(C_ADDR_WIDTH, C_DATA_WIDTH);
     do_reset;
 
+    if not OWNER_ID then
     log(ID_LOG_HDR, "T1 : Reset value : every lock is free (the first read returns 0x00 and takes it)", C_SCOPE);
     for l in C_LOCKS'range loop
       chk(C_LOCKS(l), C_FREE , "lock" & integer'image(l) & " reset value : free, now taken");
@@ -181,6 +189,60 @@ begin
     do_reset;
     chk(SPINLOCK_LOCK0, C_FREE, "lock0 free after reset");
     chk(SPINLOCK_LOCK1, C_FREE, "lock1 free after reset");
+
+    else
+
+    log(ID_LOG_HDR, "O1 : Reset value : every lock is free, a read has no side effect", C_SCOPE);
+    for l in C_LOCKS'range loop
+      chk(C_LOCKS(l), C_FREE , "lock" & integer'image(l) & " reset value : free");
+      chk(C_LOCKS(l), C_FREE , "lock" & integer'image(l) & " still free after a read");
+    end loop;
+
+    log(ID_LOG_HDR, "O2 : Acquire with an ID, other IDs and wrong releases are refused, release by the owner", C_SCOPE);
+    for l in C_LOCKS'range loop
+      for i in 0 to 2 loop
+        wr (C_LOCKS(l), x"05"  , "lock" & integer'image(l) & " acquire by ID 0x05");
+        chk(C_LOCKS(l), x"05"  , "lock" & integer'image(l) & " owner 0x05");
+        chk(C_LOCKS(l), x"05"  , "lock" & integer'image(l) & " owner 0x05 (read without side effect)");
+        wr (C_LOCKS(l), x"07"  , "lock" & integer'image(l) & " acquire by ID 0x07 while taken");
+        chk(C_LOCKS(l), x"05"  , "lock" & integer'image(l) & " still owned by 0x05");
+        wr (C_LOCKS(l), x"87"  , "lock" & integer'image(l) & " release by ID 0x07 (not the owner)");
+        chk(C_LOCKS(l), x"05"  , "lock" & integer'image(l) & " release by another ID refused");
+        wr (C_LOCKS(l), x"00"  , "lock" & integer'image(l) & " write 0x00");
+        chk(C_LOCKS(l), x"05"  , "lock" & integer'image(l) & " write 0x00 does not release");
+        wr (C_LOCKS(l), x"FF"  , "lock" & integer'image(l) & " write 0xFF");
+        chk(C_LOCKS(l), x"05"  , "lock" & integer'image(l) & " write 0xFF does not release");
+        wr (C_LOCKS(l), x"85"  , "lock" & integer'image(l) & " release by the owner 0x05");
+        chk(C_LOCKS(l), C_FREE , "lock" & integer'image(l) & " free after the release");
+      end loop;
+      wr (C_LOCKS(l), x"85"  , "lock" & integer'image(l) & " free : write 0x85");
+      wr (C_LOCKS(l), x"80"  , "lock" & integer'image(l) & " free : write 0x80");
+      wr (C_LOCKS(l), x"00"  , "lock" & integer'image(l) & " free : write 0x00");
+      chk(C_LOCKS(l), C_FREE , "lock" & integer'image(l) & " still free (a value with MSB = 1 or 0x00 never takes a lock)");
+      wr (C_LOCKS(l), x"7F"  , "lock" & integer'image(l) & " acquire by ID 0x7F");
+      chk(C_LOCKS(l), x"7F"  , "lock" & integer'image(l) & " owner 0x7F");
+      wr (C_LOCKS(l), x"FF"  , "lock" & integer'image(l) & " release by the owner 0x7F");
+      chk(C_LOCKS(l), C_FREE , "lock" & integer'image(l) & " free");
+    end loop;
+
+    log(ID_LOG_HDR, "O3 : Locks are independent", C_SCOPE);
+    wr (SPINLOCK_LOCK0, x"01"  , "lock0 acquire by ID 0x01");
+    wr (SPINLOCK_LOCK1, x"02"  , "lock1 acquire by ID 0x02");
+    chk(SPINLOCK_LOCK0, x"01"  , "lock0 owner 0x01");
+    chk(SPINLOCK_LOCK1, x"02"  , "lock1 owner 0x02");
+    wr (SPINLOCK_LOCK1, x"81"  , "lock1 release by ID 0x01 (owner of lock0 only)");
+    chk(SPINLOCK_LOCK1, x"02"  , "lock1 still owned by 0x02");
+    wr (SPINLOCK_LOCK0, x"81"  , "lock0 release by its owner 0x01");
+    chk(SPINLOCK_LOCK0, C_FREE , "lock0 free");
+    chk(SPINLOCK_LOCK1, x"02"  , "lock1 still owned by 0x02 after the release of lock0");
+
+    log(ID_LOG_HDR, "O4 : Asynchronous reset releases every lock", C_SCOPE);
+    wr (SPINLOCK_LOCK0, x"03"  , "lock0 acquire by ID 0x03");
+    do_reset;
+    chk(SPINLOCK_LOCK0, C_FREE, "lock0 free after reset");
+    chk(SPINLOCK_LOCK1, C_FREE, "lock1 free after reset");
+
+    end if;
 
     log(ID_LOG_HDR, "Number of checks : " & integer'image(v_checks), C_SCOPE);
     report_alert_counters(FINAL);

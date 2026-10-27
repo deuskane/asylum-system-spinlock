@@ -30,6 +30,7 @@ entity spinlock_registers is
    ;sbi_tgt_o  : out sbi_tgt_t
     -- CSR
    ;sw2hw_o    : out spinlock_sw2hw_t
+   ;hw2sw_i    : in  spinlock_hw2sw_t
   );
 end entity spinlock_registers;
 
@@ -115,16 +116,16 @@ begin  -- architecture rtl
   generate
   --==================================
   -- Register    : lock0
-  -- Description : Lock 0 (test-and-set on read, write 0x00 to release)
+  -- Description : Lock 0 (OWNER_ID = false : test-and-set on read, write 0x00 to release; OWNER_ID = true : write the owner ID to acquire, write 0x80 + ID to release, read without side effect)
   -- Address     : 0x0
   -- Width       : 8
-  -- Sw Access   : rsw0c
-  -- Hw Access   : none
-  -- Hw Type     : reg
+  -- Sw Access   : rw
+  -- Hw Access   : rw
+  -- Hw Type     : ext
   --==================================
   --==================================
   -- Field       : value
-  -- Description : Read: returns the lock state then takes the lock (all bits set to 1) - 0x00: lock was free and is now owned by the reader, 0xFF (any non-zero value): lock already taken. Write: bits written to 0 are cleared (write 0x00 to release), a write never takes the lock
+  -- Description : OWNER_ID = false - Read: returns the lock state then takes the lock (all bits set to 1) - 0x00: lock was free and is now owned by the reader, 0xFF (any non-zero value): lock already taken. Write: bits written to 0 are cleared (write 0x00 to release), a write never takes the lock. OWNER_ID = true - Read: owner ID (0x00: free), no side effect. Write ID (0x01 to 0x7F): takes a free lock, ignored if taken. Write 0x80 + ID: releases the lock if ID is the owner, ignored otherwise
   -- Width       : 8
   --==================================
 
@@ -146,12 +147,12 @@ begin  -- architecture rtl
     lock0_we      <= sig_wcs and sig_we and lock0_wcs;
     lock0_wdata   <= sig_wdata;
     lock0_wdata_sw(7 downto 0) <= lock0_wdata(7 downto 0); -- value
+    lock0_wdata_hw(7 downto 0) <= hw2sw_i.lock0.value; -- value
+    sw2hw_o.lock0.value <= lock0_rdata_hw(7 downto 0); -- value
 
-    ins_lock0 : csr_reg
+    ins_lock0 : csr_ext
       generic map
         (WIDTH         => 8
-        ,INIT          => INIT_lock0
-        ,MODEL         => "rsw0c"
         )
       port map
         (clk_i         => clk_i
@@ -162,9 +163,9 @@ begin  -- architecture rtl
         ,sw_re_i       => lock0_re
         ,sw_rbusy_o    => lock0_rbusy
         ,sw_wbusy_o    => lock0_wbusy
-        ,hw_wd_i       => (others => '0')
-        ,hw_rd_o       => open
-        ,hw_we_i       => '0'
+        ,hw_wd_i       => lock0_wdata_hw
+        ,hw_rd_o       => lock0_rdata_hw
+        ,hw_we_i       => hw2sw_i.lock0.we
         ,hw_sw_re_o    => sw2hw_o.lock0.re
         ,hw_sw_we_o    => sw2hw_o.lock0.we
         );
@@ -178,6 +179,7 @@ begin  -- architecture rtl
     lock0_rdata   <= (others => '0');
     lock0_wcs      <= '0';
     lock0_wbusy    <= '0';
+    sw2hw_o.lock0.value <= "00000000";
     sw2hw_o.lock0.re <= '0';
     sw2hw_o.lock0.we <= '0';
   end generate gen_lock0_b;
@@ -186,16 +188,16 @@ begin  -- architecture rtl
   generate
   --==================================
   -- Register    : lock1
-  -- Description : Lock 1 (test-and-set on read, write 0x00 to release)
+  -- Description : Lock 1 (OWNER_ID = false : test-and-set on read, write 0x00 to release; OWNER_ID = true : write the owner ID to acquire, write 0x80 + ID to release, read without side effect)
   -- Address     : 0x1
   -- Width       : 8
-  -- Sw Access   : rsw0c
-  -- Hw Access   : none
-  -- Hw Type     : reg
+  -- Sw Access   : rw
+  -- Hw Access   : rw
+  -- Hw Type     : ext
   --==================================
   --==================================
   -- Field       : value
-  -- Description : Read: returns the lock state then takes the lock (all bits set to 1) - 0x00: lock was free and is now owned by the reader, 0xFF (any non-zero value): lock already taken. Write: bits written to 0 are cleared (write 0x00 to release), a write never takes the lock
+  -- Description : OWNER_ID = false - Read: returns the lock state then takes the lock (all bits set to 1) - 0x00: lock was free and is now owned by the reader, 0xFF (any non-zero value): lock already taken. Write: bits written to 0 are cleared (write 0x00 to release), a write never takes the lock. OWNER_ID = true - Read: owner ID (0x00: free), no side effect. Write ID (0x01 to 0x7F): takes a free lock, ignored if taken. Write 0x80 + ID: releases the lock if ID is the owner, ignored otherwise
   -- Width       : 8
   --==================================
 
@@ -217,12 +219,12 @@ begin  -- architecture rtl
     lock1_we      <= sig_wcs and sig_we and lock1_wcs;
     lock1_wdata   <= sig_wdata;
     lock1_wdata_sw(7 downto 0) <= lock1_wdata(7 downto 0); -- value
+    lock1_wdata_hw(7 downto 0) <= hw2sw_i.lock1.value; -- value
+    sw2hw_o.lock1.value <= lock1_rdata_hw(7 downto 0); -- value
 
-    ins_lock1 : csr_reg
+    ins_lock1 : csr_ext
       generic map
         (WIDTH         => 8
-        ,INIT          => INIT_lock1
-        ,MODEL         => "rsw0c"
         )
       port map
         (clk_i         => clk_i
@@ -233,9 +235,9 @@ begin  -- architecture rtl
         ,sw_re_i       => lock1_re
         ,sw_rbusy_o    => lock1_rbusy
         ,sw_wbusy_o    => lock1_wbusy
-        ,hw_wd_i       => (others => '0')
-        ,hw_rd_o       => open
-        ,hw_we_i       => '0'
+        ,hw_wd_i       => lock1_wdata_hw
+        ,hw_rd_o       => lock1_rdata_hw
+        ,hw_we_i       => hw2sw_i.lock1.we
         ,hw_sw_re_o    => sw2hw_o.lock1.re
         ,hw_sw_we_o    => sw2hw_o.lock1.we
         );
@@ -249,6 +251,7 @@ begin  -- architecture rtl
     lock1_rdata   <= (others => '0');
     lock1_wcs      <= '0';
     lock1_wbusy    <= '0';
+    sw2hw_o.lock1.value <= "00000000";
     sw2hw_o.lock1.re <= '0';
     sw2hw_o.lock1.we <= '0';
   end generate gen_lock1_b;

@@ -31,6 +31,8 @@ package spinlock_pkg is
 component sbi_spinlock is
   generic (
     NAME             : string  := ""
+   ;OWNER_ID         : boolean := false -- false : anonymous test-and-set on read
+                                        -- true  : owner ID written by software (compare-and-set)
     );
   port   (
     clk_i            : in  std_logic;

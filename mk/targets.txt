@@ -1,3 +1,4 @@
-default      : Default Target
-sim_spinlock : Simulation of sbi_spinlock with VIP
+default            : Default Target
+sim_spinlock       : Simulation of sbi_spinlock with VIP
+sim_spinlock_owner : Simulation of sbi_spinlock with VIP - owner ID mode (OWNER_ID = true)
 
