@@ -9,8 +9,8 @@
 -- Wrapper (lint_ghdl, lint_ghdl_synth_*) : sbi_spinlock with flat
 -- and constrained ports (sbi_spinlock has unconstrained SBI ports and cannot
 -- be a synthesis top). SBI address / data width : SBI_ADDR_WIDTH /
--- SBI_DATA_WIDTH. NAME (only generic) is only in sbi_tgt.info, not
--- connected.
+-- SBI_DATA_WIDTH. OWNER_ID is forwarded; NAME is only in sbi_tgt.info,
+-- not connected.
 -------------------------------------------------------------------------------
 -- Copyright (c) 2026
 -------------------------------------------------------------------------------
@@ -18,6 +18,7 @@
 -- Date        Version  Author   Description
 -- 2026-10-20  1.0      mrosiere Created
 -- 2026-10-24  1.1      mrosiere Was sbi_spinlock_synth_top, library asylum
+-- 2026-11-15  1.2      mrosiere Forward OWNER_ID
 -------------------------------------------------------------------------------
 
 library ieee;
@@ -26,6 +27,9 @@ library asylum;
 use     asylum.sbi_pkg.all;
 
 entity sbi_spinlock_wrapper is
+  generic (
+    OWNER_ID      : boolean := false
+  );
   port (
     clk_i         : in  std_logic;
     arst_b_i      : in  std_logic;
@@ -58,6 +62,9 @@ begin
   rdata_o           <= sbi_tgt.rdata;
 
   ins_sbi_spinlock : entity asylum.sbi_spinlock
+    generic map (
+      OWNER_ID        => OWNER_ID
+    )
     port map (
       clk_i           => clk_i,
       arst_b_i        => arst_b_i,

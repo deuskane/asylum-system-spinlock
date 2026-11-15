@@ -115,6 +115,14 @@ targets:
       pre_run : [ghdl_synth]
 
   #---------------------------------------
+  lint_ghdl_synth_owner :
+  #---------------------------------------
+    << : *lint_ghdl_synth
+    description     : Synthesis check of sbi_spinlock_wrapper, owner ID mode (OWNER_ID = true)
+    parameters      :
+      - OWNER_ID=true
+
+  #---------------------------------------
   sim_spinlock:
   #---------------------------------------
     << : *default
@@ -159,7 +167,7 @@ parameters :
 #=========================================
 
   OWNER_ID :
-    description : Lock protocol of the testbench DUT, false = test-and-set on read, true = owner ID
+    description : Lock protocol of sbi_spinlock (tb_spinlock, sbi_spinlock_wrapper), false = test-and-set on read, true = owner ID
     datatype    : bool
     default     : false
     paramtype   : generic
