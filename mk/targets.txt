@@ -9,4 +9,6 @@ sim_spinlock_independent     : Simulation of sbi_spinlock (UVVM) - test-and-set 
 sim_spinlock_owner           : Simulation of sbi_spinlock (UVVM) - owner ID mode (OWNER_ID = true), every scenario
 sim_spinlock_reset_values    : Simulation of sbi_spinlock (UVVM) - test-and-set on read (OWNER_ID = false) - every lock free after reset, NAME of the target, first read takes the lock
 sim_spinlock_write_values    : Simulation of sbi_spinlock (UVVM) - test-and-set on read (OWNER_ID = false) - a write never takes a lock, it clears the bits written to 0
+syn_default                  : Synthesis (Artix-7, sky130) of sbi_spinlock_wrapper, default generics
+syn_owner                    : Synthesis (Artix-7, sky130) of sbi_spinlock_wrapper, owner ID mode (OWNER_ID = true)
 
