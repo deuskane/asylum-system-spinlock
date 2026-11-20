@@ -1,0 +1,15 @@
+{ "signal": [
+  { "name": "clk_i",          "wave": "p......." },
+  { "name": "sbi_ini_i.cs",   "wave": "0101010." },
+  { "name": "sbi_ini_i.re",   "wave": "01010..." },
+  { "name": "sbi_ini_i.we",   "wave": "0....10." },
+  { "name": "sbi_ini_i.addr", "wave": "x2x2x2x.", "data": ["lock0", "lock0", "lock0"] },
+  { "name": "sbi_ini_i.wdata","wave": "x....3x.", "data": ["0x00"] },
+  { "name": "sbi_tgt_o.rdata","wave": "x4x5x...", "data": ["0x00 free", "0xFF taken"] },
+  {},
+  { "name": "lock_r(0)",      "wave": "4.5...4.", "data": ["0x00", "0xFF", "0x00"] }
+  ],
+  "head": { "text": "OWNER_ID = false : test-and-set on read" },
+  "foot": { "text": "read : the value before the access, the lock is set at its end ; write 0x00 : release" },
+  "config": { "hscale": 2 }
+}

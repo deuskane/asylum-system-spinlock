@@ -1,39 +1,102 @@
 <mxfile host="Electron">
-  <diagram name="Overview" id="block">
-    <mxGraphModel dx="709" dy="444" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+  <diagram name="Overview" id="spinlock-ov">
+    <mxGraphModel grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
-        <mxCell id="0" />
-        <mxCell id="1" parent="0" />
-        <mxCell id="BM_4Ou5d5qC52tK8YKA3-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
-          <mxGeometry height="240" width="240" x="160" y="240" as="geometry" />
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="spinlock-ov-1" value="generics: NAME, OWNER_ID" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;verticalAlign=middle;rounded=0;fontSize=10;fontColor=#666666;fontStyle=2;align=center;" vertex="1" parent="1">
+          <mxGeometry x="160" y="130" width="680" height="30" as="geometry"/>
         </mxCell>
-        <mxCell id="BM_4Ou5d5qC52tK8YKA3-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" value="&lt;b&gt;sbi_spinlock&lt;/b&gt;" vertex="1">
-          <mxGeometry height="20" width="80" x="160" y="240" as="geometry" />
+        <mxCell id="spinlock-ov-2" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="170" width="680" height="300" as="geometry"/>
         </mxCell>
-        <mxCell id="BM_4Ou5d5qC52tK8YKA3-7" parent="0" value="Core" />
-        <mxCell id="BM_4Ou5d5qC52tK8YKA3-8" parent="BM_4Ou5d5qC52tK8YKA3-7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="" vertex="1">
-          <mxGeometry height="160" width="160" x="200" y="280" as="geometry" />
+        <mxCell id="spinlock-ov-3" value="sbi_spinlock" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="160" y="170" width="100" height="20" as="geometry"/>
         </mxCell>
-        <mxCell id="BM_4Ou5d5qC52tK8YKA3-9" parent="BM_4Ou5d5qC52tK8YKA3-7" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" value="spinlock_registers" vertex="1">
-          <mxGeometry height="20" width="120" x="200" y="280" as="geometry" />
+        <mxCell id="spinlock-ov-4" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="200" y="210" width="200" height="230" as="geometry"/>
         </mxCell>
-        <mxCell id="BM_4Ou5d5qC52tK8YKA3-40" parent="BM_4Ou5d5qC52tK8YKA3-7" style="rounded=0;whiteSpace=wrap;html=1;" value="S" vertex="1">
-          <mxGeometry height="20" width="20" x="200" y="350" as="geometry" />
+        <mxCell id="spinlock-ov-5" value="spinlock_registers" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="200" y="210" width="130" height="20" as="geometry"/>
         </mxCell>
-        <mxCell id="BM_4Ou5d5qC52tK8YKA3-42" edge="1" parent="BM_4Ou5d5qC52tK8YKA3-7" source="BM_4Ou5d5qC52tK8YKA3-41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;startArrow=classic;startFill=1;strokeWidth=2;" target="BM_4Ou5d5qC52tK8YKA3-40">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="spinlock-ov-6" value="M" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="250" width="20" height="20" as="geometry"/>
         </mxCell>
-        <mxCell id="BM_4Ou5d5qC52tK8YKA3-41" parent="BM_4Ou5d5qC52tK8YKA3-7" style="rounded=0;whiteSpace=wrap;html=1;" value="M" vertex="1">
-          <mxGeometry height="20" width="20" x="100" y="350" as="geometry" />
+        <mxCell id="spinlock-ov-7" value="S" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="250" width="20" height="20" as="geometry"/>
         </mxCell>
-        <mxCell id="guECTh1eK6yuvC3PfUtp-4" parent="BM_4Ou5d5qC52tK8YKA3-7" style="rounded=0;whiteSpace=wrap;html=1;fontSize=10;" value="RSW0C" vertex="1">
-          <mxGeometry height="60" width="40" x="260" y="330" as="geometry" />
+        <mxCell id="spinlock-ov-8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;startArrow=classic;startFill=1;strokeWidth=2;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="60" y="260" as="sourcePoint"/>
+            <mxPoint x="200" y="260" as="targetPoint"/>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="guECTh1eK6yuvC3PfUtp-5" parent="BM_4Ou5d5qC52tK8YKA3-7" style="triangle;whiteSpace=wrap;html=1;shapeInside=1;direction=north;" value="" vertex="1">
-          <mxGeometry height="10" width="20" x="270" y="380" as="geometry" />
+        <mxCell id="spinlock-ov-9" value="SBI" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;verticalAlign=middle;rounded=0;align=center;" vertex="1" parent="1">
+          <mxGeometry x="70" y="232" width="70" height="20" as="geometry"/>
         </mxCell>
-        <mxCell id="guECTh1eK6yuvC3PfUtp-6" parent="BM_4Ou5d5qC52tK8YKA3-7" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="lock&amp;lt;x&amp;gt;" vertex="1">
-          <mxGeometry height="20" width="60" x="250" y="310" as="geometry" />
+        <mxCell id="spinlock-ov-10" value="lock0 (0x0), lock1 (0x1):&lt;br&gt;csr_ext, no storage&lt;br&gt;&lt;br&gt;out: re, we, wdata&lt;br&gt;in: read data" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;verticalAlign=middle;rounded=0;fontSize=11;align=left;" vertex="1" parent="1">
+          <mxGeometry x="230" y="290" width="165" height="130" as="geometry"/>
+        </mxCell>
+        <mxCell id="spinlock-ov-11" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="500" y="210" width="310" height="230" as="geometry"/>
+        </mxCell>
+        <mxCell id="spinlock-ov-12" value="p_lock" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="500" y="210" width="60" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="spinlock-ov-13" value="next value&lt;br&gt;&lt;br&gt;&lt;b&gt;OWNER_ID = false&lt;/b&gt;&lt;br&gt;read: 0xFF&lt;br&gt;write: AND wdata&lt;br&gt;&lt;br&gt;&lt;b&gt;OWNER_ID = true&lt;/b&gt;&lt;br&gt;write ID: take if free&lt;br&gt;write 0x80+ID: release&lt;br&gt;if owner" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="530" y="245" width="140" height="150" as="geometry"/>
+        </mxCell>
+        <mxCell id="spinlock-ov-14" value="lock_r(0)&lt;br&gt;8 bits" style="rounded=0;whiteSpace=wrap;html=1;fontSize=11;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="710" y="245" width="70" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="spinlock-ov-15" value="" style="triangle;whiteSpace=wrap;html=1;direction=north;" vertex="1" parent="1">
+          <mxGeometry x="735" y="295" width="20" height="10" as="geometry"/>
+        </mxCell>
+        <mxCell id="spinlock-ov-16" value="lock_r(1)&lt;br&gt;8 bits" style="rounded=0;whiteSpace=wrap;html=1;fontSize=11;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="710" y="335" width="70" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="spinlock-ov-17" value="" style="triangle;whiteSpace=wrap;html=1;direction=north;" vertex="1" parent="1">
+          <mxGeometry x="735" y="385" width="20" height="10" as="geometry"/>
+        </mxCell>
+        <mxCell id="spinlock-ov-18" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="670" y="275" as="sourcePoint"/>
+            <mxPoint x="710" y="275" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="spinlock-ov-19" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="670" y="365" as="sourcePoint"/>
+            <mxPoint x="710" y="365" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="spinlock-ov-20" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="400" y="270" as="sourcePoint"/>
+            <mxPoint x="530" y="270" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="spinlock-ov-21" value="re, we, wdata" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;verticalAlign=middle;rounded=0;align=center;" vertex="1" parent="1">
+          <mxGeometry x="410" y="250" width="110" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="spinlock-ov-22" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="780" y="275" as="sourcePoint"/>
+            <mxPoint x="400" y="420" as="targetPoint"/>
+            <Array as="points">
+              <mxPoint x="795" y="275"/>
+              <mxPoint x="795" y="420"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="spinlock-ov-23" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=none;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="780" y="365" as="sourcePoint"/>
+            <mxPoint x="795" y="365" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="spinlock-ov-24" value="lock_r (read)" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;verticalAlign=middle;rounded=0;align=center;" vertex="1" parent="1">
+          <mxGeometry x="410" y="400" width="110" height="20" as="geometry"/>
         </mxCell>
       </root>
     </mxGraphModel>
