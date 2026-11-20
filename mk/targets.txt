@@ -1,7 +1,14 @@
-default                 : Default Target
-lint_ghdl               : Lint with GHDL (-Wall analysis and elaboration of sbi_spinlock_wrapper)
-lint_ghdl_synth_default : Synthesis check of sbi_spinlock_wrapper, default generics
-lint_ghdl_synth_owner   : Synthesis check of sbi_spinlock_wrapper, owner ID mode (OWNER_ID = true)
-sim_spinlock            : Simulation of sbi_spinlock with VIP
-sim_spinlock_owner      : Simulation of sbi_spinlock with VIP - owner ID mode (OWNER_ID = true)
+default                      : Default Target
+lint_ghdl                    : Lint with GHDL (-Wall analysis and elaboration of sbi_spinlock_wrapper)
+lint_ghdl_synth_default      : Synthesis check of sbi_spinlock_wrapper, default generics
+lint_ghdl_synth_owner        : Synthesis check of sbi_spinlock_wrapper, owner ID mode (OWNER_ID = true)
+sim_spinlock                 : Simulation of sbi_spinlock (UVVM) - test-and-set on read (OWNER_ID = false) - build only (scenarios of TESTS_LIST)
+sim_spinlock_acquire_release : Simulation of sbi_spinlock (UVVM) - test-and-set on read (OWNER_ID = false) - a read takes a free lock, the next reads return taken, write 0x00 releases
+sim_spinlock_async_reset     : Simulation of sbi_spinlock (UVVM) - test-and-set on read (OWNER_ID = false) - the asynchronous reset releases every lock, also without clock edge
+sim_spinlock_independent     : Simulation of sbi_spinlock (UVVM) - test-and-set on read (OWNER_ID = false) - an access to a lock never changes the other one
+sim_spinlock_owner           : Simulation of sbi_spinlock (UVVM) - owner ID mode (OWNER_ID = true), every scenario
+sim_spinlock_reset_values    : Simulation of sbi_spinlock (UVVM) - test-and-set on read (OWNER_ID = false) - every lock free after reset, NAME of the target, first read takes the lock
+sim_spinlock_write_values    : Simulation of sbi_spinlock (UVVM) - test-and-set on read (OWNER_ID = false) - a write never takes a lock, it clears the bits written to 0
+syn_default                  : Synthesis (Artix-7, sky130) of sbi_spinlock_wrapper, default generics
+syn_owner                    : Synthesis (Artix-7, sky130) of sbi_spinlock_wrapper, owner ID mode (OWNER_ID = true)
 
