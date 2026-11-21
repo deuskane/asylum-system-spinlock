@@ -142,10 +142,10 @@ Figures of the `syn_*` targets (`make nonreg_syn`, see [Targets](#targets)): [sy
 
 | Configuration | LUT¹ | LUTRAM¹ | FF¹ | CARRY4¹ | MUXF7/F8¹ | BRAM¹ | DSP¹ | Area² (µm²) | kGE³ |
 |---|---|---|---|---|---|---|---|---|---|
-| `syn_default` (`OWNER_ID = false`) | 40 | 0 | 16 | 0 | 0 | 0 | 0 | 658.13 | 0.175 |
-| `syn_owner` (`OWNER_ID = true`) | 52 | 0 | 16 | 0 | 12 | 0 | 0 | 982.19 | 0.262 |
+| `syn_default` (`OWNER_ID = false`) | 25 | 0 | 16 | 0 | 0 | 0 | 0 | 658.13 | 0.175 |
+| `syn_owner` (`OWNER_ID = true`) | 35 | 0 | 16 | 0 | 12 | 0 | 0 | 982.19 | 0.262 |
 
-¹ Xilinx Artix-7 (LUT6), Yosys 0.33 `synth_xilinx -flatten -noiopad -noclkbuf`, before place and route: every cell of the netlist is counted, Vivado may differ. An `INV` counts as a `LUT1`: `synth_xilinx` puts one on the reset pin of each flip-flop with the active-low reset (16 of the LUTs of both configurations). The IP has no memory: no LUTRAM, no BRAM. The 16 flip-flops are the two 8-bit lock registers.
+¹ Xilinx Artix-7 (LUT6), Yosys 0.33 `synth_xilinx -flatten -noiopad -noclkbuf`, before place and route: every cell of the netlist is counted, Vivado may differ. Identical cells are merged as a vendor tool does (`opt_merge -share_all`): the inverters of an active-low reset net become one (the 16 lock flip-flops share one `INV` in both configurations); every remaining cell is counted, an `INV` as a `LUT1`. The IP has no memory: no LUTRAM, no BRAM. The 16 flip-flops are the two 8-bit lock registers.
 
 ² SkyWater sky130 `sky130_fd_sc_hd`, typical corner (tt, 25 °C, 1.80 V), Yosys 0.33 `synth` + `dfflibmap` + `abc -liberty`: standard-cell area only, no timing constraint, no buffering, clock tree or placement.
 
