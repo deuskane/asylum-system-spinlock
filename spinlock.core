@@ -51,7 +51,6 @@ filesets:
     depend       :
       - ">=asylum:utils:generators:2.8.0"
       - asylum:utils:pkg
-      - asylum:target:techmap
 
   #---------------------------------------
   sim:

@@ -30,7 +30,6 @@ use     asylum.logic_pkg.all;
 use     asylum.sbi_pkg.all;
 use     asylum.spinlock_pkg.all;
 use     asylum.spinlock_csr_pkg.all;
-use     asylum.techmap_pkg.all;
 
 entity sbi_spinlock is
   generic (
